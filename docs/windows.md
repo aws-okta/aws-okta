@@ -28,12 +28,29 @@ Native Windows includes Windows shells/environments that execute Windows binarie
 
 `aws-okta` generally works fine in WSL as long as you're on Windows build >= 15093.  Windows builds earlier than this lack the console features required.  To find out what build of Windows you're on run the `winver` command.
 
-The easiest way to install under WSL is to download the [latest release](https://github.com/segmentio/aws-okta/releases) Linux binary and put it somewhere in your path.
+The easiest way to install under WSL is to download the [latest release](https://github.com/segmentio/aws-okta/releases) Linux binary and put it somewhere in your path. Note: Linux binary files are listed under the previous maintainers repository at the time of this update.
 
 ### Installation From Source
 
 1. Install golang >= 1.10 - follow the instructions [here](https://github.com/golang/go/wiki/Ubuntu) if your WSL distribution does not natively include an appropriate version
-2. `go get github.com/segmentio/aws-okta`
+2. `go get github.com/aws-okta/aws-okta`
 3. Add `~/go/bin` to your $PATH
 4. Follow the general instructions for configuring and using `aws-okta`
-5. To update `go get -u github.com/segmentio/aws-okta`
+5. To update `go get -u github.com/aws-okta/aws-okta`
+
+
+### Build for Windows on Linux
+
+1. Install golang >= 1.10 - follow the instructions [here](https://github.com/golang/go/wiki/Ubuntu) if your distribution does not natively include an appropriate version
+2. Clone the repo to your local build machine
+3. Change to the root of the repository and run the following commands
+```
+$> go mod vendor
+$> go get github.com/nomad-software/vend
+$> ~/go/bin/vend
+$> GOOS=windows go build -mod=vendor -ldflags="-X main.Version=v1.0.2"
+```
+
+This will build a raw `aws-okta.exe` binary that can be used on a Windows machine.
+
+
